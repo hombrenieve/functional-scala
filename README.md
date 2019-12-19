@@ -1,2 +1,2 @@
 # functional-scala
-Scala exercises in SW Craftmanship
+Scala exercises in SW Craftsmanship
