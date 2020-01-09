@@ -71,10 +71,11 @@ def cifras(num: Int): Int =
 cifras(99999)
 
 def fibonacci(n: Int): Int =
-  if (n < 2)
-    1
-  else
-    fibonacci(n-1)+fibonacci(n-2)
+  n match {
+    case 1 => 1
+    case 2 => 1
+    case _ => fibonacci(n-1)+fibonacci(n-2)
+  }
 
 fibonacci(1)
 fibonacci(3)
@@ -98,12 +99,61 @@ def mcm(pair: (Int, Int)): Int =
 
 mcm(72, 50)
 
-def isPrime(num: Int): Boolean = {
-  def canBeDivided(num: Int, divisor: Int): Boolean =
-    num % divisor == 0
+def pow(base: Double, exp: Int): Double =
+  exp match {
+    case 1 => base
+    case _ => base*pow(base, exp-1)
+  }
 
+pow(2,3)
+
+def addition(a:Int, b:Int):Int =
+  b match {
+    case 0 => a
+    case _ => 1+addition(a, b-1)
+  }
+
+addition(2,5)
+
+
+def resto(dividendo: Int, divisor: Int): Int =
+  dividendo match {
+    case d if(d < divisor) => d
+    case _ => resto(dividendo-divisor, divisor)
+  }
+
+resto(3, 8)
+resto(10, 2)
+resto(5, 2)
+
+
+def isPrime(num: Int): Boolean = {
+  def cantBeDivided(num: Int, divisor: Int): Boolean =
+    divisor == 1 || ((num % divisor) match {
+      case 0 => false
+      case r if (r != 0) => cantBeDivided(num, divisor-1)
+    })
   num match {
     case 1 => true
-
+    case _ => cantBeDivided(num, num-1)
   }
+
 }
+
+isPrime(1)
+isPrime(3)
+isPrime(10)
+isPrime(15)
+isPrime(23)
+
+def pot(base: Int, exp: Int): Int = {
+  def pot2(base: Int, exp: Int, acc: Int): Int =
+    exp match {
+      case 0 => acc
+      case _ => pot2(base, exp-1, base*acc)
+    }
+  pot2(base, exp, 1)
+}
+
+pot(2, 5)
+pot(5, 2)
