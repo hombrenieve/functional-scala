@@ -137,7 +137,6 @@ def isPrime(num: Int): Boolean = {
     case 1 => true
     case _ => cantBeDivided(num, num-1)
   }
-
 }
 
 isPrime(1)
@@ -152,8 +151,53 @@ def pot(base: Int, exp: Int): Int = {
       case 0 => acc
       case _ => pot2(base, exp-1, base*acc)
     }
+
   pot2(base, exp, 1)
 }
 
 pot(2, 5)
 pot(5, 2)
+
+def nextPrime(num: Int): Int =
+  if (isPrime(num))
+    num
+  else
+    nextPrime(num+1)
+
+nextPrime(1)
+nextPrime(2)
+nextPrime(6)
+nextPrime(21)
+
+def sumDivisores(num:Int):Int = {
+  def sumDivisores2(num:Int, curr: Int, acc: Int): Int =
+    curr match {
+      case 1 => acc
+      case _ => sumDivisores2(num, curr-1, (if (num % curr == 0) curr else 0)+acc)
+    }
+
+  num match {
+    case 1 => 1
+    case _ => sumDivisores2(num, num-1, 1)
+  }
+}
+
+sumDivisores(1)
+sumDivisores(2)
+sumDivisores(10)
+sumDivisores(28)
+
+def isPerfect(num:Int):Boolean =
+  sumDivisores(num) == num
+
+isPerfect(20)
+isPerfect(28)
+
+def areFriends(num1:Int, num2:Int):Boolean = {
+  val sum1 = sumDivisores(num1)
+  val sum2 = sumDivisores(num2)
+  sum1 == num2 && sum2 == num1
+}
+
+areFriends(34, 10)
+areFriends(220, 284)
